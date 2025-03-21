@@ -1,8 +1,8 @@
 stages:
   data_ingestion:
-    cmd: python src/data/make_dataset.py
+    cmd: python src/data/data_ingestion.py
     deps:
-    - src/data/make_dataset.py
+    - src/data/data_ingestion.py
     params:
     - data_ingestion.test_size
     outs:
@@ -15,28 +15,28 @@ stages:
     outs:
     - data/interim
   feature_engineering:
-    cmd: python src/features/build_features.py
+    cmd: python src/features/feature_engineering.py
     deps:
     - data/interim
-    - src/features/build_features.py
+    - src/features/feature_engineering.py
     params:
     - feature_engineering.max_features
     outs:
     - data/processed
   model_building:
-    cmd: python src/models/train_model.py
+    cmd: python src/model/model_building.py
     deps:
     - data/processed
-    - src/models/train_model.py
+    - src/model/model_building.py
     params:
     - model_building.learning_rate
     - model_building.n_estimators
     outs:
     - models/model.pkl
   model_evaluation:
-    cmd: python src/models/predict_model.py
+    cmd: python src/model/model_evaluation.py
     deps:
     - models/model.pkl
-    - src/models/predict_model.py
+    - src/model/model_evaluation.py
     outs:
     - reports/metrics.json
