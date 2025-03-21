@@ -84,7 +84,7 @@ def main():
         parms = load_params('params.yaml')
 
         # Load training data
-        train_data = load_train_data('./data/processed/train_bow.csv')
+        train_data = load_train_data('./data/processed/train_tfidf.csv')
 
         # Split data into features and target
         X_train, y_train = split_data(train_data=train_data)

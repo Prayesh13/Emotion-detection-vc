@@ -3,7 +3,7 @@ import pandas as pd
 import yaml
 import os
 import logging
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 # Logging configuration
 logger = logging.getLogger("feature_engineering")
@@ -56,6 +56,7 @@ def load_data(train_data_path: str, test_data_path: str) -> tuple:
         raise
 
 def transform_data(max_features: int, train_data: pd.DataFrame, test_data: pd.DataFrame) -> tuple:
+    """Apply TfIdf to the data."""
     try:
         logger.info("Starting data transformation using Bag of Words")
 
@@ -75,7 +76,7 @@ def transform_data(max_features: int, train_data: pd.DataFrame, test_data: pd.Da
         y_test = test_data['sentiment']
 
         # Initialize CountVectorizer
-        vectorizer = CountVectorizer(max_features=max_features)
+        vectorizer = TfidfVectorizer(max_features=max_features)
         X_train_bow = vectorizer.fit_transform(X_train)
         X_test_bow = vectorizer.transform(X_test)
 
@@ -99,8 +100,8 @@ def transform_data(max_features: int, train_data: pd.DataFrame, test_data: pd.Da
 def save_transformed_data(data_path: str, train_df: pd.DataFrame, test_df: pd.DataFrame) -> None:
     try:
         os.makedirs(data_path, exist_ok=True)
-        train_file = os.path.join(data_path, "train_bow.csv")
-        test_file = os.path.join(data_path, "test_bow.csv")
+        train_file = os.path.join(data_path, "train_tfidf.csv")
+        test_file = os.path.join(data_path, "test_tfidf.csv")
         
         train_df.to_csv(train_file, index=False)
         test_df.to_csv(test_file, index=False)

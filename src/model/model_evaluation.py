@@ -104,7 +104,7 @@ def save_metrics(path, metrics_dict):
 def main():
     try:
         # Load test data
-        test_data = load_test_data('./data/processed/test_bow.csv')
+        test_data = load_test_data('./data/processed/test_tfidf.csv')
 
         # Split the test data into features and labels
         X_test, y_test = split_data(test_data)
